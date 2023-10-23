@@ -1,7 +1,7 @@
 import React from "react";
 
-interface BookInfoProps {
-  book: {
+export interface BookInfoProps {
+  book?: {
     name: string;
     price: number;
     title: string;
@@ -10,7 +10,7 @@ interface BookInfoProps {
 }
 
 export const BookInfo: React.FC<BookInfoProps> = ({ book }) => {
-  const { name, price, title, pages } = book || {};
+  const { name, price, title, pages } = book ?? {};
 
   return book ? (
     <>
