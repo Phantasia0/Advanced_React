@@ -6,3 +6,4 @@ export const logProps = (Component: React.FC) => {
     return <Component {...props} />;
   };
 };
+1;
