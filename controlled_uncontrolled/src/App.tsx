@@ -1,4 +1,5 @@
-import { UncontrolledFlow } from "./components/uncontorlled-flow";
+import { useState } from "react";
+import { ControlledFlow } from "./components/controlled-flow";
 
 export interface ParamType {
   name?: string;
@@ -31,7 +32,7 @@ const StepTwo = ({ goNext }: { goNext?: NextFn }) => {
       <button
         onClick={() => {
           if (goNext) {
-            goNext({ age: 20 });
+            goNext({ age: 29 });
           }
         }}
       >
@@ -43,7 +44,24 @@ const StepTwo = ({ goNext }: { goNext?: NextFn }) => {
 const StepThree = ({ goNext }: { goNext?: NextFn }) => {
   return (
     <>
-      <h1>Step #3: Enter your country</h1>
+      <h1>Congratulation! You are qualified!</h1>
+      <button
+        onClick={() => {
+          if (goNext) {
+            goNext({});
+          }
+        }}
+      >
+        Next
+      </button>
+    </>
+  );
+};
+
+const StepFour = ({ goNext }: { goNext?: NextFn }) => {
+  return (
+    <>
+      <h1>Step #4: Enter your country</h1>
       <button
         onClick={() => {
           if (goNext) {
@@ -58,18 +76,28 @@ const StepThree = ({ goNext }: { goNext?: NextFn }) => {
 };
 
 function App() {
+  const [data, setData] = useState<ParamType>({});
+  const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
+  const goNext = (dataFromStep: ParamType) => {
+    setData({ ...data, ...dataFromStep });
+    setCurrentStepIndex((prevState) => prevState + 1);
+  };
+
   return (
     <>
-      <UncontrolledFlow
+      <ControlledFlow
         onDone={(data) => {
           console.log(data);
           alert("Final Step Completed!");
         }}
+        currentIndex={currentStepIndex}
+        onNext={goNext}
       >
         <StepOne />
         <StepTwo />
-        <StepThree />
-      </UncontrolledFlow>
+        {data.age! > 25 && <StepThree />}
+        <StepFour />
+      </ControlledFlow>
     </>
   );
 }
