@@ -3,7 +3,7 @@ import "./App.css";
 import { Input } from "./input";
 
 function App() {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<any>(null);
 
   function submitHandler(e: FormEvent) {
     e.preventDefault();
@@ -14,9 +14,15 @@ function App() {
   return (
     <form onSubmit={submitHandler}>
       <Input ref={inputRef} />
-      <button type="submit" className="button">
-        Submit
+      <button
+        className="button"
+        onClick={() => console.log(inputRef.current.value)}
+      >
+        Focus
       </button>
+      {/*<button type="submit" className="button">*/}
+      {/*  Submit*/}
+      {/*</button>*/}
     </form>
   );
 }
